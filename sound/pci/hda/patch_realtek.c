@@ -5564,6 +5564,7 @@ enum {
 	ALC282_FIXUP_ACER_TRAVELMATE_PINS,
 	ALC255_FIXUP_ACER_LIMIT_INT_MIC_BOOST,
 	ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS,
+	ALC256_FIXUP_ACER_SWIFT_NO_MIC_PRESENCE,
 };
 
 static const struct hda_fixup alc269_fixups[] = {
@@ -6512,6 +6513,16 @@ static const struct hda_fixup alc269_fixups[] = {
 		.chained = true,
 		.chain_id = ALC269_FIXUP_HEADSET_MODE
 	},
+	[ALC256_FIXUP_ACER_SWIFT_NO_MIC_PRESENCE] = {
+		.type = HDA_FIXUP_PINS,
+		.v.pins = (const struct hda_pintbl[]) {
+			{ 0x19, 0x02a1113c }, /* use as headset mic, without its own jack detect */
+			{ 0x1a, 0x99a3092f }, /* use as internal mic */
+			{ },
+		},
+		.chained = true,
+		.chain_id = ALC269_FIXUP_HEADSET_MODE_NO_HP_MIC
+	},
 };
 
 static const struct snd_pci_quirk alc269_fixup_tbl[] = {
@@ -6535,6 +6546,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
 	SND_PCI_QUIRK(0x1025, 0x1166, "Acer Veriton N4640G", ALC269VC_FIXUP_NL3_SECOND_JACK),
 	SND_PCI_QUIRK(0x1025, 0x1167, "Acer Veriton N6640G", ALC269VC_FIXUP_NL3_SECOND_JACK),
 	SND_PCI_QUIRK(0x1025, 0x1247, "Acer vCopperbox", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
+	SND_PCI_QUIRK(0x1025, 0x129c, "Acer SWIFT SF314-55", ALC256_FIXUP_ACER_SWIFT_NO_MIC_PRESENCE),
 	SND_PCI_QUIRK(0x1028, 0x0470, "Dell M101z", ALC269_FIXUP_DELL_M101Z),
 	SND_PCI_QUIRK(0x1028, 0x054b, "Dell XPS one 2710", ALC275_FIXUP_DELL_XPS),
 	SND_PCI_QUIRK(0x1028, 0x05bd, "Dell Latitude E6440", ALC292_FIXUP_DELL_E7X),
